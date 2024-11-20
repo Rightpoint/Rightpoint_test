@@ -1,0 +1,91 @@
+# Workflow name
+name: 'Cypress'
+
+# Event for the workflow
+on: deployment_status
+
+jobs:
+    e2e:
+        if: github.event.deployment_status.state == 'success'
+        runs-on: ubuntu-latest
+        env:
+            VERCEL_DEPLOYMENT_URL: ${{ github.event.deployment_status.target_url }}
+        steps:
+            - uses: actions/checkout@v1
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+
+            - name: Install turborepo
+              run: |
+                  yarn global add turbo
+                  echo "$(yarn global bin)" >> $GITHUB_PATH
+
+            - name: Prune dependencies used
+              run: turbo prune --scope=@rightpoint/web-e2e
+
+            - name: Install pruned dependencies
+              run: yarn --cwd out/apps/web-e2e install --prefer-offline
+
+            - name: Run Cypress end-to-end testing
+              run: yarn --cwd out/apps/web-e2e cypress run --env TARGET_SITE_URL=$VERCEL_DEPLOYMENT_URL
+
+            # On E2E failure, upload screenshots
+            - name: Upload screenshots artifacts (E2E failure)
+              uses: actions/upload-artifact@v1 # On failure we upload artifacts, https://help.github.com/en/actions/automating-your-workflow-with-github-actions/persisting-workflow-data-using-artifacts
+              if: failure()
+              with:
+                  name: screenshots
+                  path: apps/web-e2e/cypress/screenshots/
+
+            # On E2E failure, upload videos
+            - name: Upload videos artifacts (E2E failure)
+              uses: actions/upload-artifact@v1 # On failure we upload artifacts, https://help.github.com/en/actions/automating-your-workflow-with-github-actions/persisting-workflow-data-using-artifacts
+              if: failure()
+              with:
+                  name: videos
+                  path: apps/web-e2e/cypress/videos/
+
+            # We need to find the PR id. Will be used later to comment on that PR.
+            - name: Finding Pull Request ID
+              uses: jwalton/gh-find-current-pr@v1
+              id: findPr
+              if: always() # It forces the job to be always executed, even if a previous job fail.
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+
+            # On E2E failure, add a comment to the PR with additional information, if there is an open PR for the current branch
+            - name: Comment PR (E2E failure)
+              id: comment_to_pr_failure
+              uses: marocchino/sticky-pull-request-comment@v2
+              if: steps.findPr.outputs.number && failure()
+              with:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  number: ${{ steps.findPr.outputs.number }}
+                  header: e2e-result
+                  recreate: true
+                  message: |
+                      :x:&nbsp; E2E tests **FAILED** for commit ${{ github.sha }} previously deployed at [${{ env.VERCEL_DEPLOYMENT_URL }}](${{ env.VERCEL_DEPLOYMENT_URL }})
+                      Download artifacts (screenshots + videos) from [`checks`](https://github.com/rightpoint/rightpoint.com/pull/${{ steps.findPr.outputs.number }}/checks) section
+
+            # On E2E success, add a comment to the PR, if there is an open PR for the current branch
+            - name: Comment PR (E2E success)
+              id: comment_to_pr_success
+              uses: marocchino/sticky-pull-request-comment@v2
+              if: steps.findPr.outputs.number && success()
+              with:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  number: ${{ steps.findPr.outputs.number }}
+                  header: e2e-result
+                  recreate: true # replace error
+                  message: |
+                      :white_check_mark:&nbsp; E2E tests **SUCCESS** for commit ${{ github.sha }} previously deployed at [${{ env.VERCEL_DEPLOYMENT_URL }}](${{ env.VERCEL_DEPLOYMENT_URL }})

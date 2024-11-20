@@ -1,0 +1,6 @@
+{
+    "env": {
+        "TARGET_SITE_URL": "http://localhost:8000",
+        "VERCEL_PROTECTION_BYPASS_KEY": "gJuvoCJ8tjb1y20dR1AIRYSToJJ98KDh"
+    }
+}

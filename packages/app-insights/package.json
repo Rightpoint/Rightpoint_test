@@ -1,0 +1,17 @@
+{
+    "name": "@rightpoint/app-insights",
+    "sideEffects": false,
+    "version": "0.0.0",
+    "main": "./src/index.ts",
+    "license": "MIT",
+    "scripts": {},
+    "dependencies": {
+        "@microsoft/applicationinsights-react-js": "^3.4.1",
+        "@microsoft/applicationinsights-web": "^2.8.10"
+    },
+    "devDependencies": {
+        "typescript": "4.7.4",
+        "@rightpoint/tsconfig": "*",
+        "@rightpoint/eslint": "*"
+    }
+}

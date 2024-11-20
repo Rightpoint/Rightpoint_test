@@ -1,0 +1,17 @@
+{
+    "name": "@rightpoint/contentful",
+    "sideEffects": false,
+    "version": "0.0.0",
+    "main": "./src/index.ts",
+    "license": "MIT",
+    "scripts": {},
+    "dependencies": {
+        "@rightpoint/core": "*",
+        "contentful": "^9.2.17"
+    },
+    "devDependencies": {
+        "@rightpoint/eslint": "*",
+        "@rightpoint/tsconfig": "*",
+        "typescript": "4.7.4"
+    }
+}

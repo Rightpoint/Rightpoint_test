@@ -1,0 +1,25 @@
+{
+    "name": "@rightpoint/vercel-edge-redirect",
+    "sideEffects": false,
+    "version": "0.0.0",
+    "main": "./src/index.ts",
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "test": "jest"
+    },
+    "dependencies": {
+        "@rightpoint/contentful": "*",
+        "@rightpoint/core": "*",
+        "@vercel/edge-config": "^0.1.1",
+        "cross-fetch": "^3.1.5",
+        "node-fetch": "^3.3.0",
+        "typescript": "^4.9.5"
+    },
+    "devDependencies": {
+        "@rightpoint/eslint": "*",
+        "@rightpoint/tsconfig": "*",
+        "next": "*",
+        "ts-node": "^10.9.1"
+    }
+}
