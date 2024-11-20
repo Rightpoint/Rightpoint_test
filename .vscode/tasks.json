@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "eslint",
+            "problemMatcher": ["$eslint-stylish"],
+            "label": "eslint: lint whole folder"
+        },
+        {
+            "type": "npm",
+            "script": "lint",
+            "problemMatcher": ["$eslint-stylish", "$eslint-compact"],
+            "label": "npm: lint",
+            "detail": "turbo run lint"
+        }
+    ]
+}

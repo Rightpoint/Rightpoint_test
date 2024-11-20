@@ -1,0 +1,31 @@
+{
+    "name": "@rightpoint/contentful-migrations",
+    "version": "0.0.0",
+    "license": "MIT",
+    "scripts": {
+        "ts-contentful": "yarn ts-node node_modules/.bin/contentful",
+        "ts-migrate": "yarn ts-node-esm node_modules/.bin/contentful space migration",
+        "export-schema": "yarn contentful space export --config ./export-schema/export-schema.config.json",
+        "initial-import": "yarn ts-node-esm initial-import/importer-v2/landing/import-work.ts"
+    },
+    "devDependencies": {
+        "@rightpoint/core": "*",
+        "@rightpoint/tsconfig": "*",
+        "@types/react": "^18.0.28",
+        "@types/react-dom": "^18.0.10",
+        "@types/node": "*",
+        "contentful": "*",
+        "typescript": "*"
+    },
+    "dependencies": {
+        "@contentful/rich-text-from-markdown": "^15.13.1",
+        "axios": "^0.27.2",
+        "contentful-cli": "^1.14.30",
+        "contentful-management": "^10.12.0",
+        "contentful-migration": "^4.9.4",
+        "lodash": "^4.17.21",
+        "node-html-parser": "^6.0.0",
+        "ts-node": "^10.9.1",
+        "turndown": "^7.1.1"
+    }
+}
