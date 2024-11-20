@@ -1,0 +1,40 @@
+{
+    "name": "@rightpoint/web",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev -p 8000",
+        "dev:server-inspector": "cross-env NODE_OPTIONS='--inspect' next dev -p 8000",
+        "dev-all": "yarn dev",
+        "web:dev": "next dev -p 8000",
+        "build": "next build --debug",
+        "start": "next start",
+        "lint": "next lint",
+        "analyze": "ANALYZE=true next build",
+        "audit": "yarn audit --groups dependencies",
+        "postbuild": "next-sitemap --config next-sitemap.config.js"
+    },
+    "dependencies": {
+        "@rightpoint/app-insights": "*",
+        "@rightpoint/core": "*",
+        "@rightpoint/private-variables": "*",
+        "@vercel/analytics": "^0.1.11",
+        "cors": "^2.8.5",
+        "cross-env": "^7.0.3",
+        "memory-cache": "^0.2.0",
+        "next": "^13.1.2",
+        "next-sitemap": "^4.0.6",
+        "react": "^18.2.0",
+        "react-gtm-module": "^2.0.11",
+        "styled-components": "^5.3.6"
+    },
+    "devDependencies": {
+        "@next/bundle-analyzer": "^13.1.2",
+        "@rightpoint/eslint": "*",
+        "@types/react": "^18.0.28",
+        "@types/react-dom": "^18.0.10",
+        "eslint": "8.36.0",
+        "next-compose-plugins": "^2.2.1",
+        "next-transpile-modules": "10.0.0"
+    }
+}
