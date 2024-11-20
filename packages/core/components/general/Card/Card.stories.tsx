@@ -1,0 +1,99 @@
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { BackgroundColors } from '../../layout/RootComponent/background-color'
+import { RootComponentWrapper } from '../../layout/RootComponent/RootComponent.component'
+import { Card, CardVariants } from './Card.component'
+import { cardGenerators } from './Card.data'
+
+export default {
+    component: Card,
+    title: 'atoms/Cards/Card',
+} as ComponentMeta<typeof Card>
+
+const Template: ComponentStory<typeof Card> = (args) => (
+    <div
+        style={{
+            display: 'flex',
+            gap: 20,
+        }}
+    >
+        <div style={{ maxWidth: 320 }}>
+            <RootComponentWrapper
+                styles={{
+                    padding: 20,
+                }}
+                noMargins
+                noPadding
+                background={{ backgroundColor: BackgroundColors.None }}
+            >
+                <Card {...args} />
+            </RootComponentWrapper>
+        </div>
+
+        <div style={{ maxWidth: 320 }}>
+            <RootComponentWrapper
+                styles={{
+                    padding: 20,
+                }}
+                noMargins
+                noPadding
+                background={{ backgroundColor: BackgroundColors.Sand }}
+            >
+                <Card {...args} />
+            </RootComponentWrapper>
+        </div>
+
+        <div style={{ maxWidth: 320 }}>
+            <RootComponentWrapper
+                styles={{
+                    padding: 20,
+                }}
+                noMargins
+                noPadding
+                background={{ backgroundColor: BackgroundColors.Black }}
+            >
+                <Card {...args} />
+            </RootComponentWrapper>
+        </div>
+    </div>
+)
+
+export const Card1 = Template.bind({})
+Card1.args = {
+    ...cardGenerators.card1(),
+}
+
+export const Card2 = Template.bind({})
+Card2.args = {
+    ...cardGenerators.card2(),
+}
+
+const FullWidthTemplate: ComponentStory<typeof Card> = (args) => (
+    <>
+        <RootComponentWrapper
+            container
+            noMargins
+            background={{ backgroundColor: BackgroundColors.None }}
+        >
+            <Card {...args} />
+        </RootComponentWrapper>
+        <RootComponentWrapper
+            container
+            noMargins
+            background={{ backgroundColor: BackgroundColors.Sand }}
+        >
+            <Card {...args} />
+        </RootComponentWrapper>
+        <RootComponentWrapper
+            container
+            noMargins
+            background={{ backgroundColor: BackgroundColors.Black }}
+        >
+            <Card {...args} />
+        </RootComponentWrapper>
+    </>
+)
+
+export const CardFullWidth = FullWidthTemplate.bind({})
+CardFullWidth.args = {
+    ...cardGenerators.cardFullWidth(),
+}

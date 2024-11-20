@@ -1,0 +1,283 @@
+import {
+    cssVarNames,
+    resets,
+    typography,
+    zIndexes,
+} from '@rightpoint/core/styles'
+import styled, { css } from 'styled-components'
+import { media } from '@rightpoint/core/styles'
+import { breakpoints } from '@rightpoint/core/styles'
+import NextLink from 'next/link'
+import { colors } from '@rightpoint/core/variables'
+
+type NavbarProps = {
+    $isSticky?: boolean
+    $isPopupOpen?: boolean
+}
+
+const mediaMobileNav = media('xs', 'md')
+const mediaDesktopNav = media('md')
+
+const navbarFragments = {
+    height: css`
+        padding-top: 38px;
+        transition: height 1s ease 0s;
+
+        ${mediaMobileNav} {
+            padding-top: 20px;
+        }
+    `,
+    absolute: css`
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    `,
+    flex: css`
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    `,
+    innerPad: css`
+        padding-left: 40px;
+        padding-right: 30px;
+
+        ${media('xs', 'sm')} {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    `,
+}
+
+export const NavbarStyles = {
+    Navbar: styled.div<NavbarProps>`
+        ${navbarFragments.height}
+        ${navbarFragments.absolute}
+        ${navbarFragments.flex}  
+        ${navbarFragments.innerPad}
+
+        z-index: ${zIndexes.stickyNavbar};
+        color: var(${cssVarNames.content.colorText}, black);
+
+        ${({ $isSticky, $isPopupOpen }) =>
+            ($isSticky || $isPopupOpen) &&
+            css`
+                // hide navbar items
+                ${NavbarStyles.NavbarItems__Item}:not([data-circled]) {
+                    opacity: 0;
+                }
+                // hide logo text
+                g.logo-text-group {
+                    opacity: 0;
+                }
+                // show menu button
+                ${NavbarStyles.MenuItem} {
+                    opacity: 1;
+                }
+            `}
+
+        ${({ $isPopupOpen }) =>
+            // if the popup is open, show the navbar logo, hide the contact button, and show the menu (hamburger)
+            $isPopupOpen &&
+            css`
+                && {
+                    ${cssVarNames.content
+                        .colorText}: ${colors.white} !important;
+                    ${mediaDesktopNav} {
+                        // show logo text
+                        g.logo-text-group {
+                            opacity: 1;
+                            transition-delay: 0.3s;
+                        }
+                    }
+                    // hide contact
+                    ${NavbarStyles.NavbarItems__Item}[data-circled] {
+                        opacity: 0;
+                    }
+                    // show menu button
+                    ${NavbarStyles.MenuItem} {
+                        opacity: 1;
+                    }
+                    ${NavbarStyles.Hamburger.Line} {
+                        transition: 0.3s ease 0s;
+                        &:nth-child(1) {
+                            transform: rotate(-45deg);
+                        }
+                        &:nth-child(2) {
+                            opacity: 0;
+                        }
+                        &:nth-child(3) {
+                            transform: rotate(45deg);
+                        }
+                    }
+                }
+            `}
+    `,
+
+    MenuItem: styled(typography.FoundersB200)`
+        ${resets.button}
+        padding: 5px 10px;
+        &:last-child {
+            padding-right: 0;
+        }
+        cursor: pointer;
+
+        opacity: 0;
+        ${mediaMobileNav} {
+            opacity: 1;
+        }
+    `,
+
+    Logo: styled.div`
+        // align logo bottom to text
+        transform: translateY(4px);
+
+        > a {
+            text-decoration: none;
+            display: block;
+        }
+        svg {
+            g.logo-text-group {
+                transition: opacity 0.3s ease 0s;
+                ${mediaMobileNav} {
+                    opacity: 0;
+                }
+            }
+        }
+        ${media('xs', 'sm')} {
+            // prevent invisible logo content from pushing menu off screen
+            width: 50px;
+
+            svg {
+                height: 31px;
+                // visual align
+                transform: translateX(-15px) translateY(-9px);
+            }
+        }
+    `,
+
+    NavbarItems: styled(typography.FoundersB200)`
+        display: flex;
+    `,
+
+    NavbarItems__Item: styled(NextLink)<{
+        $active?: boolean
+        $circled?: boolean
+    }>`
+        ${typography.FoundersB200Css}
+        display: block;
+        cursor: pointer;
+        line-height: 1;
+        text-decoration: none;
+        border-radius: 2px;
+
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        // shrink padding to fit more items
+        ${media('xs', 'lg')} {
+            padding-left: calc(10 / ${breakpoints.lg} * 100vw);
+            padding-right: calc(10 / ${breakpoints.lg} * 100vw);
+        }
+
+        ${media('lg')} {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        ${mediaMobileNav} {
+            display: none;
+        }
+
+        transition: all 0.2s ease 0s;
+
+        ${({ $circled }) =>
+            $circled &&
+            css`
+                margin-left: 13px;
+                border: 1px solid var(${cssVarNames.content.colorText});
+                border-radius: 20px;
+                display: inline-flex;
+                justify-content: center;
+                padding: 5px 13px 5px 13px;
+                align-items: center;
+                align-self: center; // don't fill height of parent
+
+                transition:
+                    color 0.3s ease, 
+                    border-color 0.3s ease,
+                    opacity: .3s ease;
+
+                &:hover {
+                    border-color: var(${cssVarNames.content.colorText});
+                }
+
+                ${NavbarStyles.Item__Active} {
+                    opacity: 0 !important;
+                }
+            `}
+    `,
+
+    // position the active underline under text.
+    Item__Positioner: styled.div`
+        position: relative;
+    `,
+
+    Item__Active: styled.div`
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(
+            ${typography.utils.cssVarNames.content.colorText},
+            black
+        );
+    `,
+
+    MenuItemAnchor: styled(typography.FoundersMB300).attrs({
+        as: 'a',
+    })`
+        & {
+            color: var(${cssVarNames.content.colorText}, black);
+            text-decoration: none;
+        }
+        margin-left: 15px;
+
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-end;
+        height: 100%;
+
+        align-items: center;
+    `,
+
+    MenuLabel: styled(typography.TextLink)`
+        color: var(${cssVarNames.content.colorText}, black);
+        margin-right: 10px;
+    `,
+    Hamburger: {
+        Root: styled.div`
+            width: 20px;
+            height: 16px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            transform: translateY(-1px);
+        `,
+        Line: styled.div`
+            height: 2px;
+            background: var(${cssVarNames.content.colorText}, black);
+            transition: all 0.3s ease 0s;
+
+            &:nth-child(1) {
+                transform-origin: right;
+            }
+            &:nth-child(2) {
+            }
+            &:nth-child(3) {
+                transform-origin: right;
+            }
+        `,
+    },
+}

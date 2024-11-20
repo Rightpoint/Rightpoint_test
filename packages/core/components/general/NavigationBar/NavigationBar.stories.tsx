@@ -1,0 +1,55 @@
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { useEffect } from 'react'
+import { LayoutWithNavbar } from '../../layout/Layout/Layout.component'
+import { RootComponentWrapper } from '../../layout/RootComponent/RootComponent.component'
+import { HeaderOld } from '../../trash/HeaderOld/HeaderOld.component'
+import { headerOldGenerators } from '../../trash/HeaderOld/HeaderOld.data'
+import { Hero } from '../Hero/Hero.component'
+import { heroGenerators } from '../Hero/Hero.data'
+import { NavigationBar, NavigationBarProps } from './NavigationBar.component'
+import { navigationBarGenerators } from './NavigationBar.data'
+export default {
+    component: NavigationBar,
+    title: 'Components/NavigationBar',
+    parameters: {
+        docs: {
+            description: {
+                // component: ''
+            },
+        },
+        // chromatic: { disableSnapshot: true },
+    },
+} as ComponentMeta<typeof NavigationBar>
+
+const Template: ComponentStory<typeof NavigationBar> = (args) => {
+    return (
+        <>
+            <LayoutWithNavbar>
+                <HeaderOld
+                    {...headerOldGenerators.default()}
+                    headerTextProps={{
+                        title: 'Scroll down to see the navigation bar stick, and scroll-spy.',
+                    }}
+                />
+                <NavigationBar {...args} />
+                {args.items.map((item) => {
+                    return (
+                        <>
+                            <RootComponentWrapper>
+                                <Hero
+                                    {...heroGenerators.default()}
+                                    title={item.text}
+                                />
+                            </RootComponentWrapper>
+                        </>
+                    )
+                })}
+            </LayoutWithNavbar>
+        </>
+    )
+}
+
+export const Default = Template.bind({})
+Default.args = {
+    ...navigationBarGenerators.default(),
+}
