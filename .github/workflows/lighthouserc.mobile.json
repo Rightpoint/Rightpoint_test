@@ -1,0 +1,13 @@
+{
+    "ci": {
+        "collect": {
+            "settings": {
+                "chromeFlags": "--no-sandbox"
+            }
+        },
+        "assert": {},
+        "upload": {},
+        "server": {},
+        "wizard": {}
+    }
+}
