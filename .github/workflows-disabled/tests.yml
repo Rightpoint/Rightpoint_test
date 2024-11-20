@@ -1,0 +1,67 @@
+# Workflow name
+name: 'Tests'
+
+# Event for the workflow
+on: push
+
+# List of jobs
+jobs:
+    tests:
+        # Operating System
+        runs-on: ubuntu-latest
+        # Job steps
+        steps:
+            - uses: actions/checkout@v1
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+
+            - name: Install dependencies
+              # use cache if exists
+              run: yarn --prefer-offline
+
+            - name: Run tests
+              run: yarn test
+
+    audit:
+        # Operating System
+        runs-on: ubuntu-latest
+        # Job steps
+        steps:
+            - uses: actions/checkout@v1
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+
+            - name: Install turborepo
+              run: |
+                  yarn global add turbo
+                  echo "$(yarn global bin)" >> $GITHUB_PATH
+
+            - name: Prune @rightpoint/web application
+              run: turbo prune --scope=@rightpoint/web
+
+            # https://github.com/yarnpkg/yarn/issues/7260
+            # audit exit codes
+            # HIGH: 8
+            # CRITICAL: 16
+            - name: Audit critical production dependencies
+              run: /bin/bash -c 'yarn --cwd=out/ audit --groups dependencies; [[ $? -ge 16 ]] && exit 1 || exit 0'

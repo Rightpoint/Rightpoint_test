@@ -1,0 +1,13 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+import { useScrollToTextWithHash } from './use-scroll-to-text-with-hash'
+
+<Meta
+    title="Documentation/Links/Scroll to text"
+    component={useScrollToTextWithHash}
+/>
+
+# Scrolling to a target based on text on page
+
+To create a link that then automatically scrolls the user down to a section of the page, you can add the following pattern to the end of the URL:
+
+`scroll-to=` followed by the **exact** text to match. If there are spaces in the text, replace them with "-".
