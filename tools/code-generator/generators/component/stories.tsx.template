@@ -1,0 +1,23 @@
+{{! prettier-ignore }}
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { {{ componentName }}, {{ componentName }}Props } from './{{ componentName }}.component'
+import { {{ componentNameLower }}Generators } from './{{ componentName }}.data'
+export default {
+    component: {{ componentName }},
+    title: '{{ componentName }}',
+    parameters: {
+        docs: {
+            description: {
+                // component: ''
+            },
+        },
+        // chromatic: { disableSnapshot: true },
+    },
+} as ComponentMeta<typeof {{ componentName }}>
+
+const Template: ComponentStory<typeof {{ componentName }}> = (args) => <{{ componentName }} {...args} />
+
+export const Default = Template.bind({})
+Default.args = {
+    ...{{ componentNameLower }}Generators.default(),
+}
