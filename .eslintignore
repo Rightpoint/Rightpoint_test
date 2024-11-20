@@ -1,0 +1,6 @@
+apps/web-e2e/
+apps/storybook/
+documentation/
+tools/
+out/**/*
+yarn.lock
