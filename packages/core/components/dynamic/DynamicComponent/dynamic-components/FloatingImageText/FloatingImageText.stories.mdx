@@ -1,0 +1,67 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+import { FloatingImageText } from './FloatingImageText.component'
+import {
+    FloatingImageTextComposed,
+    FloatingImageTextComposedProps,
+} from './FloatingImageText.component'
+
+<Meta
+    title="Documentation/Dynamic Components/FloatingImageText"
+    component={FloatingImageText}
+/>
+
+# Dynamic: Floating Image Text
+
+This is the floating component.
+
+## ⚠️ Advanced component
+
+This is an advanced component, and care is required to edit.
+
+Small edits may be possible via the JSON field, but take care not to enter "invalid json" as contentful warns.
+
+**Publishing invalid JSON in Contentful is possible, and will break the component.**
+
+If the component breaks, please roll back to the latest working version.
+
+## Reference
+
+### Fields
+
+-   `title` large hero text
+-   `content` body copy
+-   `json` used as described below
+    -   `json.variant` choices are `left`, `right`
+    -   `json.title` accepts `<b>bold</b>` tags, which are rendered as a different emphasis font as designed
+    -   `json.heroVariant`
+        -   `withImage` makes hero consume first image as centered image (Careers page designs)
+    -   `json.imageVariant`
+        -   `rounded` makes images rounded, like (Careers page designs)
+    -   `json.background.color` controls bottom background color
+-   `backgroundColor` controls full component background color
+-   `container` controls whether this component uses a container
+
+### JSON
+
+    {
+        "stats": [
+            {
+                "label": "Female Leadership",
+                "number": "53",
+                "superscript": "%"
+            },
+            {
+                "label": "Average Age",
+                "number": "52",
+                "superscript": ""
+            }
+        ],
+        "title": "Realizing experience-led transformation <b>in the experience economy</b>",
+        "variant": "left",
+        "heroTitle": "Culture",
+        "background": {
+            "color": "white"
+        },
+        "heroVariant": "withImage",
+        "imageVariant": "rounded"
+    }

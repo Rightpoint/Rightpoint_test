@@ -1,0 +1,35 @@
+import dynamic from 'next/dynamic'
+import type { EntryFields, Entry, Asset } from 'contentful'
+import { makeConfig } from '@rightpoint/core/next-contentful/configs/make-config'
+import type { {{ componentName }}Props } from './{{ componentName }}.component'
+
+/**
+ * Contentful entry types
+ */
+export type {{ componentName }}EntryFields = {
+    internalName: EntryFields.Text
+}
+
+export type {{ componentName }}Entry = Entry<{{ componentName }}EntryFields>
+
+/**
+ * Dynamic import chunks runtime components
+ */
+export const {{ componentName }}Dynamic = dynamic(() =>
+    import('./{{ componentName }}.component').then((mod) => mod.{{ componentName }})
+)
+
+export const {{ componentNameLower }}MapperConfig = makeConfig<{{ componentName }}Entry, {{ componentName }}Props>({
+    __mapperType: 'component',
+    component: {{ componentName }}Dynamic,
+    contentTypeId: '{{componentNameLower }}',
+    entryToProps: async ({ entry, manager }) => {
+        const { internalName } = entry.fields
+        return {
+            internalName,
+        }
+    },
+    // entryToRootProps: async ({ entry}) => {
+    //    return {}
+    // },
+})
