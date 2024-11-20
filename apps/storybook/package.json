@@ -1,0 +1,34 @@
+{
+    "name": "@rightpoint/storybook",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev-all": "start-storybook -p 8001",
+        "start-storybook": "start-storybook -p 8001",
+        "build-storybook": "build-storybook",
+        "chromatic": "npx chromatic --project-token ca305a06d1c3 --exit-once-uploaded"
+    },
+    "dependencies": {
+        "@rightpoint/core": "*",
+        "@rightpoint/web": "*",
+        "styled-components": "^5.3.6"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.16.5",
+        "@rightpoint/tsconfig": "*",
+        "@storybook/addon-a11y": "^6.5.5",
+        "@storybook/addon-actions": "^6.5.5",
+        "@storybook/addon-essentials": "^6.5.5",
+        "@storybook/addon-interactions": "^6.5.5",
+        "@storybook/addon-links": "^6.5.5",
+        "@storybook/builder-webpack5": "^6.5.5",
+        "@storybook/jest": "^0.0.10",
+        "@storybook/manager-webpack5": "^6.5.5",
+        "@storybook/react": "^6.5.5",
+        "@storybook/testing-library": "^0.0.13",
+        "babel-loader": "^9.1.2",
+        "storybook-addon-next-router": "^4.0.0",
+        "typescript": "*",
+        "webpack": "*"
+    }
+}
