@@ -1,0 +1,2 @@
+export * from "./lib/{{componentNameWithoutSuffix}}.page";
+export * from "./lib/{{componentNameWithoutSuffix}}.page.server";
