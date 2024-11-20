@@ -1,0 +1,15 @@
+{
+    "name": "@rightpoint/web-e2e",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "web:e2e": "yarn cypress run",
+        "web:e2e:headed": "yarn cypress run --headed",
+        "web:e2e:headed:no-exit": "yarn cypress run --headed --no-exit"
+    },
+    "dependencies": {
+        "@rightpoint/core": "*",
+        "cypress": "^12.8.1"
+    },
+    "devDependencies": {}
+}
