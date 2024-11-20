@@ -1,0 +1,22 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+import story from './ComponentGroup.stories'
+import { ComponentGroup } from './ComponentGroup.component'
+
+<Meta title={`${story.title}/Documentation`} component={ComponentGroup} />
+
+# Component Groups
+
+The ComponentGroup component is a tool for creating components with child components that can have unique property overrides based on their group.
+
+To start with, it overrides the following in child components:
+
+-   RootProps container
+-   RootProps background
+
+## Background (why we need this)
+
+Designs may have various container widths and background colors for components. These components may often be the same Entry with different containers and backgrounds. In order to prevent duplication of components, which can lead to CMS brittleness and errors over time, ComponentGroup allows for overriding of these properties.
+
+## Reusability of ComponentGroups across project
+
+In addition to facilitating customization of component properties, ComponentGroup offers the advantage of reusability. Groups of components created with ComponentGroup can be used in other areas, such as a header+text+CTA that is used in the footer on many pages.
