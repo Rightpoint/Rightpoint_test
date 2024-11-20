@@ -1,0 +1,7 @@
+import styled, { css } from 'styled-components'
+
+const {{ componentName }} = styled.div``
+
+export const {{componentName}}Styles = { 
+    {{componentName}}, 
+}

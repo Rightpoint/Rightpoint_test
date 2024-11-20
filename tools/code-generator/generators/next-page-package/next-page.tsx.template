@@ -1,0 +1,7 @@
+import { {{componentName}} } from "@rightpoint/{{name}}";
+
+// uncomment if using get static props, or more
+// import { getStaticProps as getStaticProps_ } from "@rightpoint/{{name}}";
+// export const getStaticProps = getStaticProps_
+
+export default {{componentName}}
