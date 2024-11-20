@@ -1,0 +1,11 @@
+import { render } from '@rightpoint/core/testing-library'
+
+import { {{ componentName }} } from './{{ componentName }}.component'
+import { {{ componentNameLower }}Generators } from './{{ componentName }}.data'
+
+describe('{{ componentName }}', () => {
+    it('should render successfully', () => {
+        const { baseElement } = render(<{{ componentName }} {...{{componentNameLower }}Generators.default() } />)
+        expect(baseElement).toBeTruthy()
+    })
+})
