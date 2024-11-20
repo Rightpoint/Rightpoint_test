@@ -1,0 +1,32 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+import { Link } from './Link.component'
+
+<Meta title="Documentation/Links/Link" component={Link} />
+
+# Links
+
+The link content model is used to represent all links on the site.
+
+Examples of some its features:
+
+-   Link by reference
+    -   Automatically loads pages linked in viewport in the background
+    -   Loads next page without a page load
+-   Open in new tab behavior
+-   Scroll to text on target page
+
+## Link reference
+
+The link model has a reference field which points to contentful pages. The system will resolve the URL used for the referenced page.
+
+For example, if a link reference points to a `Work Detail` page, the system will resolve the URL as `/work-detail/some-work-url`.
+
+## 🚫 Do not use custom URL unless absolutely necessary
+
+The custom URL field should only be used to target external links.
+
+Cons of using a custom URL:
+
+-   Performance costs
+-   User experience suffers due to page load
+-   URL must be maintained, and may become stale

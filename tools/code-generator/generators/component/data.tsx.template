@@ -1,0 +1,9 @@
+import styled, { css } from 'styled-components'
+import { {{componentName}}Props} from './{{componentName}}.component';
+import { makeTypedGeneratorFn } from '@rightpoint/core/utils'
+
+export const {{ componentNameLower }}Generators = makeTypedGeneratorFn<{{componentName}}Props>()({
+    default: () => ({
+
+    }),
+})
