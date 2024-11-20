@@ -1,0 +1,42 @@
+import {
+    fetchEntries,
+    fetchEntry,
+} from '@rightpoint/contentful'
+import { revalidate } from '@rightpoint/core/variables'
+import { WithGlobalProps, withGlobalProps } from '@rightpoint/core/next'
+import { GetStaticPaths, GetStaticProps } from 'next'
+
+export type {{componentName}}Props = WithGlobalProps<{
+  // page props
+}>
+
+export const temporaryGetStaticProps: GetStaticProps<
+    {{componentName}}Props
+> = async ({ params }) => {
+    const entry = await fetchEntry<EntryType>(
+        {
+            content_type: 'page',
+            'fields.slug': '/',
+            include: 5,
+        },
+        {},
+    )
+
+    if (!entry) {
+        return {
+            notFound: true,
+        }
+    }
+
+    const props = await withGlobalProps({
+        props: {
+          // props
+        },
+        pageEntry: entry,
+    })
+
+    return {
+        props,
+        revalidate: revalidate.default,
+    }
+}
