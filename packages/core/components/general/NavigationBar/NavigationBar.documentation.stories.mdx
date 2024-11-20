@@ -1,0 +1,26 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+import { NavigationBar } from './NavigationBar.component'
+import { navigationBarGenerators } from './NavigationBar.data'
+
+<Meta
+    title="Documentation/Components/NavigationBar"
+    component={NavigationBar}
+/>
+
+# Navigation bar
+
+<Canvas>
+    <Story name="Default">
+        <NavigationBar {...navigationBarGenerators.default()} />
+    </Story>
+</Canvas>
+
+## What it does
+
+The navigation bar is a component that sticks to the top when the user scrolls past it.
+
+## Where it scrolls to
+
+When an a link is clicked, the user will be scrolled to the first element that matches the link title.
+
+For example, if the link title is "Industries", the browser will scroll the user to the first element that contains the text "Industries".

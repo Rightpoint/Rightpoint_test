@@ -1,0 +1,26 @@
+{
+  "name": "@rightpoint/{{ name }}",
+  "sideEffects": false,
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    {{#if addLint }}
+    "lint": "eslint . --ext .tsx --ext .ts --format stylish"
+    {{/if}}
+  },
+  "dependencies": {
+    "@rightpoint/core": "*"{{#if includeNextDeps }},
+    "contentful": "*",
+    "next": "*"
+    {{/if}}
+  },
+  "devDependencies": {
+    "@rightpoint/tsconfig": "*",
+    "@rightpoint/eslint": "*"
+  },
+  "peerDependencies": {
+    "next": "*"
+  }
+}

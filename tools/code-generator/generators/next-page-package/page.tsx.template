@@ -1,0 +1,13 @@
+import { NextPage } from "next";
+import { {{componentName}}Styles as s } from "./{{componentNameWithoutSuffix}}.styles";
+import { {{componentName}}Props } from "./{{componentNameWithoutSuffix}}.page.server";
+
+export const {{componentName}}: NextPage<{{componentName}}Props> = () => {
+  return (
+    <s.{{componentName}}>
+      {{componentName}}
+    </s.{{componentName}}>
+  );
+};
+
+export default {{componentName}};
