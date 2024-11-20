@@ -1,0 +1,12 @@
+{
+    "name": "@rightpoint/code-generator",
+    "version": "0.0.0",
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "plop": "plop"
+    },
+    "devDependencies": {
+        "plop": "^3.0.5"
+    }
+}
