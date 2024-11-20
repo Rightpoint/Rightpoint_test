@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Default",
+    "extends": "./base.json",
+    "compilerOptions": {
+        "baseUrl": "packages/",
+        "paths": {}
+    },
+    "exclude": ["node_modules"]
+}
