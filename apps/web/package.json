@@ -1,0 +1,35 @@
+{
+    "name": "@rightpoint/web",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev -p 8000",
+        "dev:server-inspector": "cross-env NODE_OPTIONS='--inspect' next dev -p 8000",
+        "dev-all": "yarn dev",
+        "web:dev": "next dev -p 8000",
+        "build": "next build --debug",
+        "start": "next start",
+        "lint": "next lint",
+        "analyze": "ANALYZE=true next build",
+        "audit": "yarn audit --groups dependencies"
+    },
+    "dependencies": {
+        "@rightpoint/core": "*",
+        "@rightpoint/private-variables": "*",
+        "cors": "^2.8.5",
+        "cross-env": "^7.0.3",
+        "memory-cache": "^0.2.0",
+        "next": "^13.1.2",
+        "react": "^18.2.0",
+        "react-gtm-module": "^2.0.11",
+        "styled-components": "^5.3.6"
+    },
+    "devDependencies": {
+        "@next/bundle-analyzer": "^13.1.2",
+        "@rightpoint/eslint": "*",
+        "@types/react": "18.0.26",
+        "eslint": "8.32.0",
+        "next-compose-plugins": "^2.2.1",
+        "next-transpile-modules": "9.0.0"
+    }
+}

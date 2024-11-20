@@ -1,0 +1,8 @@
+import styled, { css } from 'styled-components'
+import { typography } from '@rightpoint/core/styles'
+
+const {{ componentName }} = styled.div``
+
+export const {{componentName}}Styles = { 
+    {{componentName}}, 
+}

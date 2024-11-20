@@ -1,0 +1,112 @@
+# Workflow name
+name: 'Lighthouse'
+
+# Event for the workflow
+on: deployment_status
+
+jobs:
+    lighthouse:
+        if: github.event.deployment_status.state == 'success'
+        runs-on: ubuntu-latest
+        env:
+            VERCEL_DEPLOYMENT_URL: ${{ github.event.deployment_status.target_url }}
+        steps:
+            - uses: actions/checkout@v1
+
+            - name: Get PR number
+              uses: jwalton/gh-find-current-pr@v1
+              id: findPr
+              with:
+                  state: open
+
+            # mobile audit
+            - name: Lighthouse audit
+              id: mobile_lighthouse_audit
+              uses: treosh/lighthouse-ci-action@v8
+              with:
+                  configPath: ./.github/workflows/lighthouserc.mobile.json
+                  urls: ${{env.VERCEL_DEPLOYMENT_URL}}
+                  uploadArtifacts: false
+                  temporaryPublicStorage: true
+
+            - name: Format lighthouse score
+              id: mobile_format_lighthouse_score
+              uses: actions/github-script@v3
+              with:
+                  github-token: ${{secrets.GITHUB_TOKEN}}
+                  script: |
+                      const result = ${{ steps.mobile_lighthouse_audit.outputs.manifest }}[0].summary
+                      const links = ${{ steps.mobile_lighthouse_audit.outputs.links }}
+                      const formatResult = (res) => Math.round((res * 100))
+                      Object.keys(result).forEach(key => result[key] = formatResult(result[key]))
+                      const score = res => res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴'
+                      const comment = [
+                          `⚡️ [Lighthouse report](${Object.values(links)[0]}) for the changes in this PR:`,
+                          '| Category | Score |',
+                          '| --- | --- |',
+                          `| ${score(result.performance)} Performance | ${result.performance} |`,
+                          `| ${score(result.accessibility)} Accessibility | ${result.accessibility} |`,
+                          `| ${score(result['best-practices'])} Best practices | ${result['best-practices']} |`,
+                          `| ${score(result.seo)} SEO | ${result.seo} |`,
+                          `| ${score(result.pwa)} PWA | ${result.pwa} |`,
+                          ' ',
+                          `*Lighthouse ran on [${Object.keys(links)[0]}](${Object.keys(links)[0]})*`
+                      ].join('\n')
+                      core.setOutput("comment", comment);
+
+            - name: Add comment to PR
+              id: comment_to_pr
+              uses: marocchino/sticky-pull-request-comment@v2
+              with:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  number: ${{ steps.findPr.outputs.number }}
+                  header: mobile-lighthouse
+                  recreate: true
+                  message: |
+                      Mobile: ${{ steps.mobile_format_lighthouse_score.outputs.comment }}
+
+            # desktop audit
+            - name: Lighthouse audit
+              id: desktop_lighthouse_audit
+              uses: treosh/lighthouse-ci-action@v8
+              with:
+                  configPath: ./.github/workflows/lighthouserc.desktop.json
+                  urls: ${{env.VERCEL_DEPLOYMENT_URL}}
+                  uploadArtifacts: false
+                  temporaryPublicStorage: true
+
+            - name: Format lighthouse score
+              id: desktop_format_lighthouse_score
+              uses: actions/github-script@v3
+              with:
+                  github-token: ${{secrets.GITHUB_TOKEN}}
+                  script: |
+                      const result = ${{ steps.desktop_lighthouse_audit.outputs.manifest }}[0].summary
+                      const links = ${{ steps.desktop_lighthouse_audit.outputs.links }}
+                      const formatResult = (res) => Math.round((res * 100))
+                      Object.keys(result).forEach(key => result[key] = formatResult(result[key]))
+                      const score = res => res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴'
+                      const comment = [
+                          `⚡️ [Lighthouse report](${Object.values(links)[0]}) for the changes in this PR:`,
+                          '| Category | Score |',
+                          '| --- | --- |',
+                          `| ${score(result.performance)} Performance | ${result.performance} |`,
+                          `| ${score(result.accessibility)} Accessibility | ${result.accessibility} |`,
+                          `| ${score(result['best-practices'])} Best practices | ${result['best-practices']} |`,
+                          `| ${score(result.seo)} SEO | ${result.seo} |`,
+                          `| ${score(result.pwa)} PWA | ${result.pwa} |`,
+                          ' ',
+                          `*Lighthouse ran on [${Object.keys(links)[0]}](${Object.keys(links)[0]})*`
+                      ].join('\n')
+                      core.setOutput("comment", comment);
+
+            - name: Add comment to PR
+              id: desktop_comment_to_pr
+              uses: marocchino/sticky-pull-request-comment@v2
+              with:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  number: ${{ steps.findPr.outputs.number }}
+                  header: desktop-lighthouse
+                  recreate: true
+                  message: |
+                      Desktop: ${{ steps.desktop_format_lighthouse_score.outputs.comment }}

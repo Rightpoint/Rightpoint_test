@@ -1,0 +1,49 @@
+import { FC } from 'react'
+import { ConditionalWrapper } from '@rightpoint/core/utils'
+import { Link, LinkProps } from '../../Link/Link.component'
+import { CardStyles as s } from '../Card.styles'
+import { isEmpty } from 'lodash'
+
+/**
+ * Card base components that may be shared by child cards.
+ */
+
+export interface CardTagProps {
+    text: string
+    color?: string
+    backgroundColor?: string
+    linkProps?: LinkProps
+}
+export const CardTag: FC<CardTagProps> = ({
+    text,
+    color,
+    backgroundColor,
+    linkProps,
+}) => {
+    return (
+        <ConditionalWrapper
+            condition={!isEmpty(linkProps)}
+            wrapper={(children) => <Link {...linkProps}>{children}</Link>}
+        >
+            <s.CardTag
+                style={{
+                    background: backgroundColor,
+                    color: color,
+                }}
+            >
+                {text}
+            </s.CardTag>
+        </ConditionalWrapper>
+    )
+}
+
+export interface CardTagsProps {
+    tagsProps: CardTagProps[]
+}
+export const CardTags: FC<CardTagsProps> = ({ tagsProps }) => (
+    <s.CardTags>
+        {tagsProps.map((tagProps, i) => (
+            <CardTag {...tagProps} key={i} />
+        ))}
+    </s.CardTags>
+)

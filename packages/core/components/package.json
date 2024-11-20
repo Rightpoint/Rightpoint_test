@@ -1,0 +1,35 @@
+{
+    "name": "@rightpoint/components",
+    "sideEffects": false,
+    "version": "0.0.0",
+    "license": "MIT",
+    "scripts": {
+        "test": "jest",
+        "lint": "eslint . --ext .tsx --ext .ts --format stylish"
+    },
+    "exports": {
+        ".": "./index.ts",
+        "./testing": "./entry-testing.ts"
+    },
+    "dependencies": {
+        "@rightpoint/core": "*",
+        "@rightpoint/data-generators": "*",
+        "react-player": "^2.9.0",
+        "swiper": "^7.3.4"
+    },
+    "devDependencies": {
+        "@rightpoint/tsconfig": "*",
+        "@types/jest": "^27.4.0",
+        "@types/react": "^17.0.2",
+        "@types/react-dom": "^17.0.11",
+        "jest": "^27.4.7",
+        "ts-jest": "^27.1.2",
+        "typescript": "^4.5.3"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
+        },
+        "testEnvironment": "jsdom"
+    }
+}
