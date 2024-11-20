@@ -33,7 +33,7 @@
         "@rightpoint/eslint": "*",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.10",
-        "eslint": "8.40.0",
+        "eslint": "9.15.0",
         "next-compose-plugins": "^2.2.1",
         "next-transpile-modules": "10.0.0"
     }
