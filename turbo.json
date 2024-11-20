@@ -1,0 +1,40 @@
+{
+    "pipeline": {
+        "build": {
+            "dependsOn": ["^build"],
+            "outputs": ["dist/**", ".next/**"],
+            "env": [
+                "NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT",
+                "NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN"
+            ]
+        },
+        "lint": {
+            "outputs": []
+        },
+        "test": {
+            "outputs": []
+        },
+        "dev": {
+            "cache": false
+        },
+        "dev-all": {
+            "cache": false
+        },
+        "start-storybook": {
+            "cache": false
+        },
+        "build-storybook": {},
+        "analyze": {
+            "cache": false
+        },
+        "start": {
+            "cache": false
+        },
+        "web:e2e:headed": {
+            "dependsOn": ["dev"],
+            "cache": false
+        },
+        "chromatic": {}
+    },
+    "globalDependencies": [".env.*"]
+}

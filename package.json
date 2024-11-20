@@ -1,0 +1,93 @@
+{
+    "name": "rightpoint.com",
+    "version": "0.0.0",
+    "private": true,
+    "license": "UNLICENSED",
+    "workspaces": [
+        "apps/*",
+        "packages/*",
+        "tools/*"
+    ],
+    "scripts": {
+        "start": "yarn dev-all",
+        "build": "turbo run build --filter=@rightpoint/web...",
+        "local-production": "yarn build && yarn workspace @rightpoint/web start",
+        "dev": "echo 'Clearing next cache and starting dev server' && yarn dev:rm-cache",
+        "dev:rm-cache": "rimraf ./apps/web/.next && turbo run dev",
+        "dev-all": "turbo run dev-all --parallel",
+        "web:e2e": "turbo run web:e2e:headed",
+        "cypress": "turbo run web:e2e:headed",
+        "lint": "turbo run lint",
+        "test": "turbo run test --filter=core --filter=web",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "plop": "yarn --cwd tools/code-generator plop",
+        "dep-graph": "echo 'dep graph causes canvas dependency which is not cross platform readily -- not viable today'",
+        "chromatic": "yarn turbo run chromatic",
+        "storybook": "yarn --cwd apps/storybook start-storybook",
+        "build-storybook": "yarn --cwd apps/storybook build-storybook",
+        "vercel": "yarn --cwd apps/web vercel --",
+        "vercel:pull-env": "yarn --cwd apps/web/ vercel env pull .env.local",
+        "prepare": "suppress-exit-code husky install",
+        "pre-commit": "yarn lint-staged",
+        "git:prune": "git branch --merged main | grep -v '^[ *]*main$' | xargs git branch -d",
+        "madge:circular": "yarn madge ./packages/ apps/web/ --extensions ts,tsx --circular"
+    },
+    "resolutions": {
+        "@types/react": "18.0.28",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "@storybook/react": "^6.5.5",
+        "typescript": "4.7.4"
+    },
+    "devDependencies": {
+        "@types/jest": "^28.1.3",
+        "@typescript-eslint/eslint-plugin": "^5.29.0",
+        "@typescript-eslint/parser": "^5.29.0",
+        "eslint": "^8.18.0",
+        "husky": "^7.0.4",
+        "lint-staged": "^12.1.7",
+        "madge": "^5.0.1",
+        "prettier": "^2.7.1",
+        "rimraf": "^3.0.2",
+        "suppress-exit-code": "^1.0.0",
+        "ts-jest": "^28.0.5",
+        "turbo": "^1.2.4",
+        "typescript": "4.7.4",
+        "vercel": "^23.1.2",
+        "webpack": "^5.65.0"
+    },
+    "lint-staged": {
+        "apps/**/*.{js,jsx,ts,tsx}": [
+            "suppress-exit-code prettier --write",
+            "suppress-exit-code eslint"
+        ],
+        "packages/**/*.{js,jsx,ts,tsx}": [
+            "suppress-exit-code prettier --write",
+            "suppress-exit-code eslint"
+        ],
+        "*.json": [
+            "suppress-exit-code prettier --write"
+        ]
+    },
+    "madge": {
+        "fontSize": "10px",
+        "graphVizOptions": {
+            "T": "jpeg",
+            "G": {
+                "rankdir": "LR"
+            }
+        },
+        "detectiveOptions": {
+            "ts": {
+                "skipTypeImports": true
+            },
+            "es6": {
+                "skipTypeImports": true
+            }
+        }
+    },
+    "engines": {
+        "npm": ">=7.0.0",
+        "node": ">=16"
+    }
+}

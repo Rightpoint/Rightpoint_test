@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Reckless';
+    src: url('RecklessNeue-Book.woff') format('woff');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Reckless';
+    src: url('RecklessNeue-Book.woff2') format('woff2');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Reckless';
+    src: url('RecklessNeue-Light.woff') format('woff');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Reckless';
+    src: url('RecklessNeue-Light.woff2') format('woff2');
+    font-weight: 300;
+}
