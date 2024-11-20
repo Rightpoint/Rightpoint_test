@@ -1,0 +1,13 @@
+import { FC } from "react"
+import { {{ componentName }}Styles as s } from './{{ componentName }}.styles';
+
+export interface {{ componentName }}Props {
+}
+
+export const {{ componentName }}: FC<{{ componentName }}Props> = () => {
+    return (
+      <s.{{ componentName }}>
+        {{ componentName }}
+      </s.{{ componentName }}>
+    );
+};
