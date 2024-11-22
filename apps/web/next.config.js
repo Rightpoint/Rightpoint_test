@@ -28,6 +28,8 @@ const config = {
      * - Disabling the API route used to generate every image every build also may be helpful.
      */
     staticPageGenerationTimeout: 200,
+    distDir: '.next',
+
     transpilePackages: packagesToTranspile,
     reactStrictMode: true,
     webpack: (config, { dev }) => {
