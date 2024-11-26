@@ -29,6 +29,7 @@ const config = {
      */
     staticPageGenerationTimeout: 200,
     distDir: '.next',
+    exportTrailingSlash: true,
 
     transpilePackages: packagesToTranspile,
     reactStrictMode: true,
