@@ -89,6 +89,7 @@
         "node": ">=16"
     },
     "dependencies": {
+        "@netlify/functions": "^2.8.2",
         "next": "13.5"
     }
 }
