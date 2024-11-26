@@ -88,5 +88,7 @@
         "npm": ">=7.0.0",
         "node": ">=16"
     },
-    "dependencies": {}
+    "dependencies": {
+        "next": "13.5"
+    }
 }
